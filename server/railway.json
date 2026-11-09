@@ -1,0 +1,27 @@
+{
+  "name": "TAREQ IELTS Speaking Practice",
+  "description": "Single-file IELTS Speaking practice website with Gemini AI evaluation",
+  "repository": "https://github.com/your-username/tareq-ielts",
+  "logo": "https://your-site.netlify.app/logo.png",
+  "env": {
+    "GEMINI_API_KEY": {
+      "description": "Your Google Gemini API key. Get one at https://aistudio.google.com/app/apikey",
+      "required": true
+    },
+    "GEMINI_MODEL": {
+      "description": "Gemini model to use (default: gemini-1.5-flash)",
+      "value": "gemini-1.5-flash",
+      "required": false
+    },
+    "PORT": {
+      "description": "Port to listen on (Railway sets this automatically)",
+      "required": false
+    }
+  },
+  "builds": [
+    { "src": "server/server.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "server/server.js" }
+  ]
+}

@@ -1,0 +1,9 @@
+node_modules/
+.env
+.env.local
+.env.*.local
+*.log
+uploads/
+.DS_Store
+# Don't ignore download/ (it's needed by the backend for static serving)
+!download/

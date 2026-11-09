@@ -1,0 +1,28 @@
+# Render.com deployment configuration for the TAREQ IELTS backend.
+#
+# Render is an alternative to Railway. The free tier gives you 750 hours/month
+# (enough for always-on, 24/7). Spins down after 15 min of inactivity (first
+# request after spin-down takes ~30s).
+#
+# To deploy on Render:
+#   1. Push your project to GitHub
+#   2. Visit https://render.com → New → Web Service
+#   3. Connect your GitHub repo
+#   4. Render will read this render.yaml automatically
+
+services:
+  - type: web
+    name: tareq-ielts-api
+    env: node
+    plan: free
+    rootDir: server
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false  # set this manually in the Render dashboard
+      - key: GEMINI_MODEL
+        value: gemini-1.5-flash
+      - key: NODE_VERSION
+        value: 20.0.0

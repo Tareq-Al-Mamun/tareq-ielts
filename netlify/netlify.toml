@@ -1,0 +1,39 @@
+# Netlify configuration for the TAREQ IELTS static frontend.
+#
+# The frontend (HTML/CSS/JS) is fully static and is served directly by Netlify's
+# CDN. The Gemini-powered AI evaluation runs on a SEPARATE backend that you
+# deploy to Railway / Render / Fly.io (see DEPLOYMENT.md).
+#
+# After deploying the backend, set the backend URL inside the website via:
+#   Settings → "AI Evaluation Server" → enter backend URL → Save
+# OR visit: https://YOUR-NETLIFY-SITE.netlify.app/?api=https://YOUR-BACKEND
+
+[build]
+  # The publish directory contains the static HTML/CSS/JS that Netlify will serve.
+  publish = "../download"
+  # No build step is needed — the HTML is already pre-built.
+  command = ""
+
+# SPA-style fallback: any URL not matching a real file serves index.html.
+# This makes /part1, /part2, /ai-eval etc. work without server routes.
+[[redirects]]
+  from = "/*"
+  to = "/TAREQ_IELTS_Speaking_Practice.html"
+  status = 200
+
+# Security headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "microphone=(self)"
+
+# Allow large uploads for audio files sent to the backend (CORS pre-flight)
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, POST, OPTIONS"
+    Access-Control-Allow-Headers = "Content-Type"
